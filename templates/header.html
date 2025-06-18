@@ -1,12 +1,158 @@
-<!-- templates/header.html -->
-<header>
-    <img src="{{ url_for('static', filename='images/header.png') }}" alt="Portal Inmobiliario"
-         style="width: 100%; max-height: 150px; object-fit: cover; display: block;">
-    <nav style="background-color: #333; padding: 10px; text-align: center;">
-        <a href="/" style="color: white; margin: 0 15px; text-decoration: none;">Loteo Campestre Cachipay</a>
-        <a href="/otros" style="color: white; margin: 0 15px; text-decoration: none;">Coliving Miraflores</a>
-        <a href="/otros" style="color: white; margin: 0 15px; text-decoration: none;">Otros Inmuebles</a>
-        <a href="/contacto" style="color: white; margin: 0 15px; text-decoration: none;">Contacto</a>
-    </nav>
+<header style="background-color: #fff; box-shadow: 0 4px 6px rgba(0,0,0,0.1); position: relative; z-index: 1000;">
+  <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 20px;">
+    <div style="display: flex; align-items: center;">
+      <img src="{{ url_for('static', filename='images/header.png') }}" alt="Portal Inmobiliario"
+           style="height: 60px; margin-right: 10px;">
+      <h1 style="font-family: 'Segoe UI', sans-serif; font-size: 1.5em; color: #222; margin: 0;">Portal Inmobiliario</h1>
+    </div>
+    <button id="menu-toggle" style="background: none; border: none; font-size: 1.5em; display: none; color: #f15a24;">☰</button>
+  </div>
+
+  <!-- Triángulos decorativos -->
+  <div style="position: absolute; top: 10px; right: 20px; display: flex; gap: 10px;">
+    <div style="width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-bottom: 35px solid #fddc00;"></div>
+    <div style="width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-bottom: 35px solid #f15a24;"></div>
+  </div>
+
+  <!-- Navegación -->
+  <nav id="main-nav" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 25px; padding: 15px 0; background: #222;">
+    <!-- ITEM 1 -->
+    <div class="nav-item">
+      <a href="https://drive.google.com/file/d/1E3pncBuWvMQW6T1U0F0_hYePr7YBqRys/view?usp=sharing" target="_blank" class="nav-link">Loteo Campestre Cachipay</a>
+      <div class="preview-card">
+        <img src="{{ url_for('static', filename='images/loteo_preview.jpg') }}" alt="Loteo Campestre" />
+        <div class="preview-text">
+          <strong>Loteo Campestre Cachipay</strong>
+          <p>Lotes campestres rodeados de naturaleza, ideales para descanso o inversión rural.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ITEM 2 -->
+    <div class="nav-item">
+      <a href="https://drive.google.com/file/d/1Ou9ATLsj_4J6dkIY0jViDSqdlKtB9Zim/view?usp=sharing" target="_blank" class="nav-link">Coliving Miraflores</a>
+      <div class="preview-card">
+        <img src="{{ url_for('static', filename='images/coliving_preview.jpg') }}" alt="Coliving Miraflores" />
+        <div class="preview-text">
+          <strong>Coliving Miraflores</strong>
+          <p>Espacios compartidos con diseño moderno en el corazón urbano. ¡Vive diferente!</p>
+        </div>
+      </div>
+    </div>
+
+    <a href="/otros" class="nav-link">Otros Inmuebles</a>
+    <a href="/contacto" class="nav-link">Contacto</a>
+  </nav>
+
+  <style>
+    .nav-link {
+      color: white;
+      text-decoration: none;
+      font-size: 1em;
+      font-weight: 500;
+      position: relative;
+      padding: 5px 0;
+      transition: color 0.3s ease;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background-color: #f15a24;
+      transition: all 0.3s ease;
+      transform: translateX(-50%);
+    }
+
+    .nav-link:hover {
+      color: #fddc00;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-item {
+      position: relative;
+      display: inline-block;
+    }
+
+    .preview-card {
+      display: none;
+      position: absolute;
+      top: 35px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      z-index: 10;
+      width: 240px;
+      text-align: left;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .preview-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+
+    .preview-text {
+      font-size: 0.85em;
+      color: #333;
+    }
+
+    .nav-item:hover .preview-card {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translate(-50%, 10px); }
+      to { opacity: 1; transform: translate(-50%, 0); }
+    }
+
+    @media (max-width: 768px) {
+      #menu-toggle {
+        display: block;
+      }
+
+      #main-nav {
+        display: none;
+        flex-direction: column;
+        background: #222;
+        padding: 10px;
+      }
+
+      #main-nav.show {
+        display: flex;
+      }
+
+      .nav-link {
+        padding: 10px 0;
+        text-align: center;
+      }
+
+      .preview-card {
+        display: none !important; /* Desactivado en móvil */
+      }
+    }
+  </style>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const toggleBtn = document.getElementById("menu-toggle");
+      const nav = document.getElementById("main-nav");
+      toggleBtn.addEventListener("click", function () {
+        nav.classList.toggle("show");
+      });
+    });
+  </script>
 </header>
 
